@@ -38,7 +38,7 @@ function Form() {
   const [submitError, setError] = React.useState(false);
   function onTestClick(e) {
     history.push({
-      pathname: "/mapview",
+      pathname: "/MapView",
     });
   }
   return (
