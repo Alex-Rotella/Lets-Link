@@ -175,7 +175,8 @@ function Form() {
                 onClick={onTestClick}
               >
                 {submitError
-                  ? errorMessage && <div class="error"> {errorMessage} </div> : "Submit"}
+                  ? errorMessage && <div className="error"> {errorMessage} </div>
+                  : "Submit"}
               </button>
             </div>
           </div>
