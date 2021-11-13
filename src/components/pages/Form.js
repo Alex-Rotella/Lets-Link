@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./pages.css";
+
 function Form() {
   const preferences = [
     { value: "Sightseeing", isChecked: false },
@@ -32,6 +33,7 @@ function Form() {
   const [budgetValue, setBudgetValue] = useState({
     value: "",
   });
+  const [locationValue, setLocationValue] = useState([]);
   const [errorMessage, setErrorMessage] = React.useState("");
 
   const history = useHistory();
@@ -39,13 +41,27 @@ function Form() {
   function onTestClick(e) {
     history.push({
       pathname: "/MapView",
+      state: {
+        locationValue,
+        checkboxPreferences,
+        peopleValue,
+        budgetValue,
+      },
     });
   }
   return (
     <div>
+      <div
+        className="fullscreen-form-wrap"
+        dangerouslySetInnerHTML={{
+          __html: `
       <video src="/videos/views.mp4" autoPlay loop muted />
+      `,
+        }}
+      ></div>
       <div className="container">
         <form>
+
           <div className="row">
             <div className="col-lg-7 mx-auto">
               <div className="card shadow border-0 mb-4">
@@ -175,7 +191,9 @@ function Form() {
                 onClick={onTestClick}
               >
                 {submitError
-                  ? errorMessage && <div className="error"> {errorMessage} </div>
+                  ? errorMessage && (
+                      <div className="error"> {errorMessage} </div>
+                    )
                   : "Submit"}
               </button>
             </div>

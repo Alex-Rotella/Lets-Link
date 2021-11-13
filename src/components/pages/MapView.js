@@ -7,8 +7,11 @@ const defaultCenter = [37.0902, -100.546875];
 const defaultZoom = 4;
 
 function MapView() {
+  const location = useLocation();
   const [map, setMap] = useState(null);
   const proxy = "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
+  const { checkboxPreferences, peopleValue, budgetValue } =
+  location.state;
 
   return (
     <div>
