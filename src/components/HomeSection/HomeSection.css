@@ -5,10 +5,14 @@ video {
     position: fixed;
     z-index: -1;
   }
+
+  .fullscreen-video-wrap {
+    width: 100%;
+    height: 100vh;
+  }
   
   .hero-container {
     height: 100vh;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,6 +37,7 @@ video {
   
   .hero-btns {
     margin-top: 32px;
+    padding-bottom: 370px;
   }
   
   .hero-btns .btn {

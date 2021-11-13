@@ -17,8 +17,10 @@ function HomeSection() {
   
   return (
     <div className='hero-container'>
+      <div className="fullscreen-video-wrap" dangerouslySetInnerHTML={{ __html: `
       <video src='/videos/bonfire.mp4' autoPlay loop muted />
-      <h1> Let's link </h1>
+      ` }}></div>
+      <h1> Let's Link </h1>
       <p>What are you waiting for?</p>
       <div className='hero-btns'>
       <Button
