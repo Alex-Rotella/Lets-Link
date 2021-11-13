@@ -55,7 +55,14 @@ function Form() {
         className="fullscreen-form-wrap"
         dangerouslySetInnerHTML={{
           __html: `
-      <video src="/videos/views.mp4" autoPlay loop muted />
+      <video 
+        loop
+        muted
+        autoPlay
+        playsinline
+      >
+      <source src="/videos/city.mp4" type="video/mp4">
+      </video>
       `,
         }}
       ></div>
