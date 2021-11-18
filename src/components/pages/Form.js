@@ -68,7 +68,6 @@ function Form() {
       ></div>
       <div className="container">
         <form>
-
           <div className="row">
             <div className="col-lg-7 mx-auto">
               <div className="card shadow border-0 mb-4">
@@ -196,6 +195,9 @@ function Form() {
                 type="button"
                 className="btn btn-primary"
                 onClick={onTestClick}
+                style={{
+                  marginTop: "-25px"
+                }}
               >
                 {submitError
                   ? errorMessage && (
