@@ -4,8 +4,6 @@ import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router-dom";
 import L from "leaflet";
 import icon from "../../constants";
-import CardItem from "../Cards/CardItem";
-import Cards from "../Cards";
 import MapCards from "../MapCards";
 
 const defaultCenter = [37.0902, -100.546875];
