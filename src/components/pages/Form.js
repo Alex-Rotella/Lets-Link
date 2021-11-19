@@ -38,19 +38,33 @@ function Form() {
 
   const history = useHistory();
   const [submitError, setError] = React.useState(false);
+  const selectedPreferences = checkboxPreferences.filter(
+    ({ isChecked }) => isChecked
+  );
   function onTestClick(e) {
-    history.push({
-      pathname: "/MapView",
-      state: {
-        locationValue,
-        checkboxPreferences,
-        peopleValue,
-        budgetValue,
-      },
-    });
+    if (
+      selectedPreferences.length > 0 &&
+      peopleValue.value !== "" &&
+      budgetValue.value !== ""
+    ) {
+      history.push({
+        pathname: "/MapView",
+        state: {
+          locationValue,
+          checkboxPreferences,
+          peopleValue,
+          budgetValue,
+        },
+      });
+    } else {
+      e.preventDefault();
+      setErrorMessage("Error! Please fill all checkboxes");
+      setError(true);
+    }
   }
   return (
     <div>
+      {console.log(peopleValue.value)}
       <div
         className="fullscreen-form-wrap"
         dangerouslySetInnerHTML={{
@@ -191,20 +205,30 @@ function Form() {
                   </ul>
                 </div>
               </div>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={onTestClick}
-                style={{
-                  marginTop: "-25px"
-                }}
-              >
-                {submitError
-                  ? errorMessage && (
-                      <div className="error"> {errorMessage} </div>
-                    )
-                  : "Submit"}
-              </button>
+              {submitError ? (
+                errorMessage && (
+                  <button
+                    onClick={onTestClick}
+                    style={{
+                      marginTop: "-25px",
+                    }}
+                    className="btn btn-danger"
+                  >
+                    {errorMessage}
+                  </button>
+                )
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={onTestClick}
+                  style={{
+                    marginTop: "-25px",
+                  }}
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </form>
