@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router-dom";
 import L from "leaflet";
 import icon from "../../constants";
+import Cards from "../Cards";
 
 const defaultCenter = [37.0902, -100.546875];
 const defaultZoom = 3;
@@ -23,7 +24,7 @@ function MapView() {
       setLoading(false);
       map.locate().on("locationfound", function (e) {
         setPosition(e.latlng);
-        map.flyTo(e.latlng, 10);
+        map.flyTo(e.latlng, 14);
         setBbox(e.bounds.toBBoxString().split(","));
       });
     }, [map]);
