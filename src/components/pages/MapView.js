@@ -4,6 +4,9 @@ import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router-dom";
 import L from "leaflet";
 import icon from "../../constants";
+import CardItem from "../Cards/CardItem";
+import Cards from "../Cards";
+import MapCards from "../MapCards";
 
 const defaultCenter = [37.0902, -100.546875];
 const defaultZoom = 3;
@@ -47,17 +50,22 @@ function MapView() {
   }
   return (
     <div>
-      {console.log(selectedPreferences)}
-      {console.log(peopleValue)}
-      {console.log(budgetValue)}
-      <MapContainer center={defaultCenter} zoom={defaultZoom}>
-        <TileLayer
-          url={proxy}
-          maxZoom={20}
-          subdomains={["mt0", "mt1", "mt2", "mt3"]}
-        />
-        <LocationMarker />
-      </MapContainer>
+      <div>
+        {console.log(selectedPreferences)}
+        {console.log(peopleValue)}
+        {console.log(budgetValue)}
+        <MapContainer center={defaultCenter} zoom={defaultZoom}>
+          <TileLayer
+            url={proxy}
+            maxZoom={20}
+            subdomains={["mt0", "mt1", "mt2", "mt3"]}
+          />
+          <LocationMarker />
+        </MapContainer>
+      </div>
+      <div>
+        <MapCards />
+      </div>
     </div>
   );
 }
