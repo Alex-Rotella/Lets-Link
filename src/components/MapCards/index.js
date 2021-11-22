@@ -1,31 +1,42 @@
-import MapCardItem from "./MapCardItem";
+import React from 'react';
+import './MapCards.css';
+import CardItem from './MapCardItem';
 
-function MapCards(){
-    return(
-      <div className='mapcards'>
-        <h1>Let's plan out your next get-together!</h1>
-        <div className='mapcards__container'>
-          <div className='mapcards__wrapper'>
-            <table className='mapcards__items'>
-              <tr>
-                <td>
-                  <MapCardItem
-                    text='Experience new flavors even if you are on a budget'
-                    header='Resturants'
-                  />
-                </td>
-                <td>
-                  <MapCardItem
-                    text='Explore fun attractions nearby with our help'
-                    header='Adventure'
-                  />
-                </td>
-              </tr>
-            </table>
-          </div>
+function Cards() {
+  let place1 = 'Resturant'
+  let place2 = 'Movie Theater'
+  let place3 = 'Shopping Mall'
+
+  let details = 'Details for the place'
+
+
+  return (
+    <div className='cards'>
+      <h1>Here are the top 3 places we found!</h1>
+      <div className='cards__container'>
+        <div className='cards__wrapper'>
+        <ul className='cards__items'>
+            <CardItem
+              src='/logo192.png'
+              text={details}
+              label={place1}
+            />
+            <CardItem
+              src='/logo192.png'
+              text={details}
+              label={place2}
+            />
+              <CardItem
+              src='/logo192.png'
+              text={details}
+              label={place3}
+            />
+          </ul>
+          
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
-export default MapCards;
+export default Cards;
