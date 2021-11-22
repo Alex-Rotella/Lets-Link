@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router-dom";
-import L from "leaflet";
+//import L from "leaflet";
 import icon from "../../constants";
 import MapCards from "../MapCards";
 

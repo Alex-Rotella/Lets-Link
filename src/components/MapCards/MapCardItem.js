@@ -1,21 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 function MapCardItem(props) {
   return (
     <>
-      <table>
-        <tr>
-          <td>
-            <div className='mapcards__item__link'>
-              <h1 className='mapcard_item_header'>{props.title}</h1>
-              <div className='mapcards__item__info'>
-                <p className='mapcards__item__text'>{props.text}</p>
+      <div className='mapcard_item_container'>
+        <table id='mapcard_table'>
+          <tr>
+            <td className='mapcard_item_table_item'>
+              <div className='mapcard_item_link'>
+                <h2 className='mapcard_item_title'>{props.title}</h2>
               </div>
-            </div>
-          </td>
-        </tr>
-      </table>
+            </td>
+          </tr>
+          <tr>
+            <td className='mapcard_item_table_item'>
+              <div className='mapcard_item_info'>
+                <p className='mapcard_item_text'>{props.text}</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </>
   );
 }

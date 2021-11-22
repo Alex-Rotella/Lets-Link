@@ -1,7 +1,39 @@
-MapCardItem {
-    padding: 10px 10px;
+.mapcards_overall {
+    width: auto;
+    align-items: center;
+    background-color: yellow;
 }
 
-.mapcard_item_header {
-    font-size: large
+.mapcards_container {
+    max-width: auto;
+    width: 100%;
+    background-color: blue;
+    align-items: center;
+}
+
+.mapcards_table {
+    max-width: auto;
+    width: 100%;
+    align-items: center;
+}
+
+.mapcard_item_container {
+    max-width: auto;
+    width: 90%;
+    background-color: lightgray;
+    border-style: solid;
+    border-color: black;
+    margin: 5px;
+    align-items: center;
+}
+
+.mapcard_table {
+    max-width: auto;
+    width: 90%;
+    align-items: center;
+}
+
+.mapcard_item_table_item {
+    width: auto;
+    align-items: center;
 }
