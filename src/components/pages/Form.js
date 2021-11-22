@@ -4,11 +4,11 @@ import "./pages.css";
 
 function Form() {
   const preferences = [
-    { value: "Sightseeing", isChecked: false },
-    { value: "Beaches", isChecked: false },
-    { value: "Romantic", isChecked: false },
-    { value: "Hiking", isChecked: false },
-    { value: "Skiing", isChecked: false },
+    { value: "Shopping Mall", isChecked: false },
+    { value: "Movie Theater", isChecked: false },
+    { value: "Resturant", isChecked: false },
+    { value: "Bar", isChecked: false },
+    { value: "Night Club", isChecked: false },
   ];
 
   const people = [
