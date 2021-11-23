@@ -7,6 +7,9 @@ import MapView from './components/pages/MapView'
 import About from './components/pages/About'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+const API_KEY = process.env.REACT_APP_GOOGLE_KEY;
+
+
 function App() {
   return (
     <>
