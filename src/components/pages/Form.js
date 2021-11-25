@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./pages.css";
 import GooglePlacesAutocomplete, {
@@ -46,23 +46,14 @@ function Form() {
     ({ isChecked }) => isChecked
   );
   const [value, setValue] = useState(null);
-  const [selectedLocation, setLocation] = useState();
+  const [submitted, setSubmitted] = useState(false);
   function onTestClick(e) {
 
-    var placeID = value.value.place_id;
-    geocodeByPlaceId(placeID)
-        .then((results) => getLatLng(results[0]))
-        .then(({ lat, lng }) => {
-          console.log("Successfully got latitude and longitude", { lat, lng });
-          setLocation({lat, lng})
-        });
     if (
       selectedPreferences.length > 0 &&
       peopleValue.value !== "" &&
       budgetValue.value !== ""
     ) {
-
- 
       history.push({
         pathname: "/MapView",
         state: {
@@ -71,7 +62,6 @@ function Form() {
           peopleValue,
           budgetValue,
           value,
-          selectedLocation
         },
       });
     } else {
@@ -80,6 +70,7 @@ function Form() {
       setError(true);
     }
   }
+
 
   return (
     <div>
@@ -150,8 +141,7 @@ function Form() {
                     apiKey="AIzaSyBMXYwygAn3NwtiSlybKGmo7HZvo7OvnGA"
                     selectProps={{
                       value,
-                      onChange: setValue
-                      
+                      onChange: setValue,
                     }}
                   />
                 </div>
