@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
@@ -17,35 +18,69 @@ function MapView() {
     window.scrollTo(0, 0);
   }, []);
 
-  var place1 = "Resturant";
-  let place2 = "Movie Theater";
-  let place3 = "Shopping Mall";
 
-  let details = "Details for the place";
   const location = useLocation();
   const proxy = "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
-  const {
-    checkboxPreferences,
-    peopleValue,
-    budgetValue,
-    value,
-  } = location.state;
+  const { checkboxPreferences, peopleValue, budgetValue, value } =
+    location.state;
   const selectedPreferences = checkboxPreferences.filter(
     ({ isChecked }) => isChecked
   );
 
-  const [restaurants, setRestaurants] = useState([]);
   const [attractions, setAttractions] = useState([]);
 
   const defaultCenter = [37.0902, -100.546875];
   const defaultZoom = 3;
 
   const [map, setMap] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    var placeID = value.value.place_id;
+    geocodeByPlaceId(placeID)
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        //console.log("Successfully got latitude and longitude", { lat, lng });
+        if (isMounted) {
+          setCoordinates({ lat: lat, lng: lng });
+          setLoading(false);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+
+  useEffect(() => {
+    let isMounted = true;
+      getRestaurantsData(coordinates.lat, coordinates.lng).then((data) => {
+        if (isMounted) {
+          console.log(data);
+          setRestaurants(data);
+        }
+      });
+
+      getAttractionsData(coordinates.lat, coordinates.lng).then((data) => {
+        if (isMounted) {
+          console.log(data);
+          setAttractions(data);
+        }
+      });
+      return () => {
+        isMounted = false;
+      };
+    
+  }, [coordinates]);
+
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [selected, setSelected] = useState({});
+    const [selected, setSelected] = useState({ lat: "", lng: "" });
 
     useEffect(() => {
       let isMounted = true;
@@ -73,23 +108,44 @@ function MapView() {
       return position === null ? null : (
         <Marker position={position} icon={icon}>
           <Popup>
-            You are here. <br />
+            {selected.lat} {selected.lng}
           </Popup>
         </Marker>
       );
     }
   }
-  // need to get api working
-  // useEffect(() => {
-  //   getRestaurantsData(selected.lat, selected.lng).then((data) => {
-  //     setRestaurants(data);
-  //     console.log(data)
-  //   });
-  //   getAttractionsData(selected.lat, selected.lng).then((data) => {
-  //     setAttractions(data);
-  //     console.log(data)
-  //   });
-  // }, []);
+
+  function testButton() {
+    getRestaurantsData(39.7044808,-75.1139549)
+  }
+
+  const [place1, setPlace1] = useState('Loading..')
+  const [description1, setDescription1] = useState('Loading..')
+
+  const [place2, setPlace2] = useState('Loading..')
+  const [description2, setDescription2] = useState('Loading..')
+
+  const [place3, setPlace3] = useState('Loading..')
+  const [description3, setDescription3] = useState('Loading..')
+
+  useEffect(() => {
+
+  if(attractions.length > 0) {
+    setPlace1(attractions[0].name)
+    setDescription1(attractions[0].ranking)
+    
+
+    setPlace3(attractions[1].name)
+    setDescription3(attractions[1].ranking)
+  }
+
+  if(restaurants.length > 0){
+    setPlace2(restaurants[0].name)
+    setDescription2(restaurants[0].ranking)
+  }
+  
+  }, [attractions, restaurants]);
+
   return (
     <div>
       <div>
@@ -103,10 +159,7 @@ function MapView() {
             maxZoom={20}
             subdomains={["mt0", "mt1", "mt2", "mt3"]}
           /> */}
-          <ReactLeafletGoogleLayer
-            apiKey="AIzaSyBMXYwygAn3NwtiSlybKGmo7HZvo7OvnGA"
-            type={"roadmap"}
-          />
+          <ReactLeafletGoogleLayer apiKey={API_KEY} type={"roadmap"} />
           <LocationMarker />
         </MapContainer>
       </div>
@@ -118,15 +171,17 @@ function MapView() {
           <div className="cards__container">
             <div className="cards__wrapper">
               <ul className="cards__items">
-                <button className="remove-style">
-                  <CardItem src="/logo192.png" text={details} label={place1} />{" "}
+                <button className="remove-style" onClick={testButton}>
+                  <CardItem src="/logo192.png" text={description1} label={place1} />
                 </button>
 
                 <button className="remove-style">
-                  <CardItem src="/logo192.png" text={details} label={place2} />
+                  <CardItem src="/logo192.png" text={description2} label={place2} />
                 </button>
 
-                <CardItem src="/logo192.png" text={details} label={place3} />
+                <button className="remove-style">
+                <CardItem src="/logo192.png" text={description3} label={place3} />
+                </button>
               </ul>
             </div>
           </div>
