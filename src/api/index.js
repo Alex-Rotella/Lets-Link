@@ -8,8 +8,8 @@ export const getRestaurantsData = async (lat, lng) => {
         longitude: lng,
       },
       headers: {
-        'x-rapidapi-key': 'e140a25280msha0c613632d848ddp18a6b2jsncc574072cc50',
-        'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
+        'x-rapidapi-key': 'e65de07aecmsh675c628cd2757f3p1a3e1ejsnc5163409a5e4',
+        'x-rapidapi-host': 'travel-advisor.p.rapidapi.com'
       },
     });
 
@@ -27,7 +27,7 @@ export const getAttractionsData = async (lat, lng) => {
           longitude: lng,
         },
         headers: {
-          'x-rapidapi-key': 'e140a25280msha0c613632d848ddp18a6b2jsncc574072cc50',
+          'x-rapidapi-key': 'e65de07aecmsh675c628cd2757f3p1a3e1ejsnc5163409a5e4',
           'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
         },
       });
@@ -37,3 +37,6 @@ export const getAttractionsData = async (lat, lng) => {
       console.log(error);
     }
   };
+
+
+  
