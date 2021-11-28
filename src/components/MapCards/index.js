@@ -2,7 +2,10 @@ import React from 'react';
 import './MapCards.css';
 import CardItem from './MapCardItem';
 
+
 function Cards() {
+
+
   let place1 = 'Resturant'
   let place2 = 'Movie Theater'
   let place3 = 'Shopping Mall'

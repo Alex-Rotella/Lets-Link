@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./pages.css";
+import GooglePlacesAutocomplete, {
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-google-places-autocomplete";
 
 function Form() {
   const preferences = [
-    { value: "Shopping Mall", isChecked: false },
-    { value: "Movie Theater", isChecked: false },
-    { value: "Resturant", isChecked: false },
-    { value: "Bar", isChecked: false },
-    { value: "Night Club", isChecked: false },
+    { value: "Shopping", isChecked: false },
+    { value: "Fun & Games", isChecked: false },
+    { value: "Resturants", isChecked: false },
+    { value: "Nightlife", isChecked: false },
+    { value: "Outdoor Activities", isChecked: false },
   ];
 
   const people = [
@@ -41,7 +45,10 @@ function Form() {
   const selectedPreferences = checkboxPreferences.filter(
     ({ isChecked }) => isChecked
   );
+  const [value, setValue] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
   function onTestClick(e) {
+
     if (
       selectedPreferences.length > 0 &&
       peopleValue.value !== "" &&
@@ -54,6 +61,7 @@ function Form() {
           checkboxPreferences,
           peopleValue,
           budgetValue,
+          value,
         },
       });
     } else {
@@ -62,9 +70,10 @@ function Form() {
       setError(true);
     }
   }
+
+
   return (
     <div>
-      {console.log(peopleValue.value)}
       <div
         className="fullscreen-form-wrap"
         dangerouslySetInnerHTML={{
@@ -122,7 +131,21 @@ function Form() {
                   </ul>
                 </div>
               </div>
-
+              <div className="card shadow border-0 mb-4">
+                <div className="card-body p-5">
+                  <h2 className="h4 mb-1">What is you location?</h2>
+                  <p className="small text-muted font-italic mb-4">
+                    Where do you want us to search?
+                  </p>
+                  <GooglePlacesAutocomplete
+                    apiKey="AIzaSyBMXYwygAn3NwtiSlybKGmo7HZvo7OvnGA"
+                    selectProps={{
+                      value,
+                      onChange: setValue,
+                    }}
+                  />
+                </div>
+              </div>
               <div className="card shadow border-0 mb-4">
                 <div className="card-body p-5">
                   <h2 className="h4 mb-1">How many people are you?</h2>
