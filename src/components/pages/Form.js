@@ -11,7 +11,7 @@ function Form() {
   const preferences = [
     { value: "Shopping", isChecked: false },
     { value: "Fun & Games", isChecked: false },
-    { value: "Resturants", isChecked: false },
+    { value: "Restaurants", isChecked: false },
     { value: "Nightlife", isChecked: false },
     { value: "Outdoor Activities", isChecked: false },
   ];
