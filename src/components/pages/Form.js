@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./pages.css";
@@ -10,7 +11,7 @@ function Form() {
   const preferences = [
     { value: "Shopping", isChecked: false },
     { value: "Fun & Games", isChecked: false },
-    { value: "Resturants", isChecked: false },
+    { value: "Restaurants", isChecked: false },
     { value: "Nightlife", isChecked: false },
     { value: "Outdoor Activities", isChecked: false },
   ];

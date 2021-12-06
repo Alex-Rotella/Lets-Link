@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
@@ -17,35 +18,65 @@ function MapView() {
     window.scrollTo(0, 0);
   }, []);
 
-  var place1 = "Resturant";
-  let place2 = "Movie Theater";
-  let place3 = "Shopping Mall";
-
-  let details = "Details for the place";
   const location = useLocation();
   const proxy = "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
-  const {
-    checkboxPreferences,
-    peopleValue,
-    budgetValue,
-    value,
-  } = location.state;
+  const { checkboxPreferences, peopleValue, budgetValue, value } =
+    location.state;
   const selectedPreferences = checkboxPreferences.filter(
     ({ isChecked }) => isChecked
   );
 
-  const [restaurants, setRestaurants] = useState([]);
   const [attractions, setAttractions] = useState([]);
 
   const defaultCenter = [37.0902, -100.546875];
   const defaultZoom = 3;
 
   const [map, setMap] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    var placeID = value.value.place_id;
+    geocodeByPlaceId(placeID)
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        //console.log("Successfully got latitude and longitude", { lat, lng });
+        if (isMounted) {
+          setCoordinates({ lat: lat, lng: lng });
+          setLoading(false);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    getRestaurantsData(coordinates.lat, coordinates.lng).then((data) => {
+      if (isMounted) {
+        console.log(data);
+        setRestaurants(data);
+      }
+    });
+
+    getAttractionsData(coordinates.lat, coordinates.lng).then((data) => {
+      if (isMounted) {
+        console.log(data);
+        setAttractions(data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [coordinates]);
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [selected, setSelected] = useState({});
+    const [selected, setSelected] = useState({ lat: "", lng: "" });
 
     useEffect(() => {
       let isMounted = true;
@@ -73,23 +104,133 @@ function MapView() {
       return position === null ? null : (
         <Marker position={position} icon={icon}>
           <Popup>
-            You are here. <br />
+            {selected.lat} {selected.lng}
           </Popup>
         </Marker>
       );
     }
   }
-  // need to get api working
-  // useEffect(() => {
-  //   getRestaurantsData(selected.lat, selected.lng).then((data) => {
-  //     setRestaurants(data);
-  //     console.log(data)
-  //   });
-  //   getAttractionsData(selected.lat, selected.lng).then((data) => {
-  //     setAttractions(data);
-  //     console.log(data)
-  //   });
-  // }, []);
+  function testButton() {
+    selectedPreferences.map((e) => {
+      if (e.value == "Shopping") {
+        for (let i = 0; i < attractions.length; i++) {
+          if (
+            attractions[i]["subcategory"] &&
+            attractions[i]["subcategory"][0]["name"] == "Shopping"
+          ) {
+            console.log(
+              attractions[i].name,
+              attractions[i]["subcategory"][0]["name"]
+            );
+            console.log("");
+          }
+        }
+      }
+      if (e.value == "Fun & Games") {
+        for (let i = 0; i < attractions.length; i++) {
+          if (
+            attractions[i]["subcategory"] &&
+            attractions[i]["subcategory"][0]["name"] == "Fun & Games"
+          ) {
+            console.log(
+              attractions[i].name,
+              attractions[i]["subcategory"][0]["name"]
+            );
+            console.log("");
+          }
+        }
+      }
+      if (e.value == "Nightlife") {
+        for (let i = 0; i < attractions.length; i++) {
+          if (
+            attractions[i]["subcategory"] &&
+            attractions[i]["subcategory"][0]["name"] == "Nightlife"
+          ) {
+            console.log(
+              attractions[i].name,
+              attractions[i]["subcategory"][0]["name"]
+            );
+            console.log("");
+          }
+        }
+      }
+      if (e.value == "Outdoor Activities") {
+        for (let i = 0; i < attractions.length; i++) {
+          if (
+            attractions[i]["subcategory"] &&
+            attractions[i]["subcategory"][0]["name"] == "Outdoor Activities"
+          ) {
+            console.log(
+              attractions[i].name,
+              attractions[i]["subcategory"][0]["name"]
+            );
+            console.log("");
+          }
+        }
+      }
+      if (e.value == "Restaurants") {
+        for (let i = 0; i < restaurants.length; i++) {
+          if (restaurants[i].name) {
+            console.log(restaurants[i].name, "Restaurant");
+            console.log("");
+          }
+        }
+      }
+    });
+  }
+
+  const [place1, setPlace1] = useState("Loading..");
+  const [description1, setDescription1] = useState("Loading..");
+  const [photo1, setPhoto1] = useState("/logo512.png");
+
+  const [place2, setPlace2] = useState("Loading..");
+  const [description2, setDescription2] = useState("Loading..");
+  const [photo2, setPhoto2] = useState("/logo512.png");
+
+  const [place3, setPlace3] = useState("Loading..");
+  const [description3, setDescription3] = useState("Loading..");
+  const [photo3, setPhoto3] = useState("/logo512.png");
+  
+  const [loadingPlaces, setLoadingPlaces] = useState(true);
+  function LoadingBar() {
+    useEffect(() => {
+      if (attractions.length > 0) {
+        setPlace1(attractions[0].name);
+        setDescription1(attractions[0].ranking);
+        if (attractions[0]["photo"]) {
+          setPhoto1(attractions[0]["photo"]["images"]["small"]["url"]);
+          setLoadingPlaces(false);
+        }
+
+        setPlace3(attractions[1].name);
+        setDescription3(attractions[1].ranking);
+        if (attractions[1]["photo"]) {
+          setPhoto3(attractions[1]["photo"]["images"]["small"]["url"]);
+          setLoadingPlaces(false);
+        }
+      }
+
+      if (restaurants.length > 0) {
+        setPlace2(restaurants[0].name);
+        setDescription2(restaurants[0].ranking);
+        if (restaurants[0]["photo"]) {
+          setPhoto2(restaurants[0]["photo"]["images"]["small"]["url"]);
+          setLoadingPlaces(false);
+        }
+      }
+    }, [attractions, restaurants]);
+
+    if (loadingPlaces) {
+      return <h1> Matching your preferences..</h1>;
+    } else {
+      return (
+        <h1>
+          Here are the top 3 places we found in {value.value.description} that
+          match your search!
+        </h1>
+      );
+    }
+  }
   return (
     <div>
       <div>
@@ -103,30 +244,27 @@ function MapView() {
             maxZoom={20}
             subdomains={["mt0", "mt1", "mt2", "mt3"]}
           /> */}
-          <ReactLeafletGoogleLayer
-            apiKey="AIzaSyBMXYwygAn3NwtiSlybKGmo7HZvo7OvnGA"
-            type={"roadmap"}
-          />
+          <ReactLeafletGoogleLayer apiKey={API_KEY} type={"roadmap"} />
           <LocationMarker />
         </MapContainer>
       </div>
       <div>
         <div className="cards">
-          <h1>
-            Here are the top 3 places we found in {value.value.description}!
-          </h1>
+          <LoadingBar />
           <div className="cards__container">
             <div className="cards__wrapper">
               <ul className="cards__items">
-                <button className="remove-style">
-                  <CardItem src="/logo192.png" text={details} label={place1} />{" "}
+                <button className="remove-style" onClick={testButton}>
+                  <CardItem src={photo1} text={description1} label={place1} />
                 </button>
 
                 <button className="remove-style">
-                  <CardItem src="/logo192.png" text={details} label={place2} />
+                  <CardItem src={photo2} text={description2} label={place2} />
                 </button>
 
-                <CardItem src="/logo192.png" text={details} label={place3} />
+                <button className="remove-style">
+                  <CardItem src={photo3} text={description3} label={place3} />
+                </button>
               </ul>
             </div>
           </div>

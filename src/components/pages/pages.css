@@ -19,4 +19,6 @@ form {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+	width: 25vw;
+	display: flex;
 }
