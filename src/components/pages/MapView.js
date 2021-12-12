@@ -170,36 +170,42 @@ function MapView() {
         }
         if (e.value == "Restaurants") {
           for (let i = 0; i < restaurants.length; i++) {
+            if(restaurants[i].name){
             filteredList.push(restaurants[i]);
+            }
           }
         }
       });
-      if (filteredList.length > 0) {
-        
+      if (filteredList.length > 3) {
         //const test = Array.from({length: 3}, () => Math.floor(Math.random() * filteredList.length));
 
         setPlace1(filteredList[0].name);
         setDescription1(filteredList[0].ranking);
         if (filteredList[0]["photo"]) {
           setPhoto1(filteredList[0]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
         }
 
         setPlace2(filteredList[1].name);
         setDescription2(filteredList[1].ranking);
         if (filteredList[1]["photo"]) {
           setPhoto2(filteredList[1]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
         }
         setPlace3(filteredList[2].name);
         setDescription3(filteredList[2].ranking);
         if (filteredList[2]["photo"]) {
           setPhoto3(filteredList[2]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
         }
       }
+      else {
+        setPlace1('No location matching your search');
+        setDescription1('Please try again');
+        setPlace2('No location matching your search');
+        setDescription2('Please try again');
+        setPlace3('No location matching your search');
+        setDescription3('Please try again');
+      }
     }, [filteredList, selectedPreferences]);
-
+    setLoadingPlaces(false);
     if (loadingPlaces) {
       return <h1> Matching your preferences..</h1>;
     } else {
