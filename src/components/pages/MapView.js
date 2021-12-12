@@ -110,74 +110,6 @@ function MapView() {
       );
     }
   }
-  function testButton() {
-    selectedPreferences.map((e) => {
-      if (e.value == "Shopping") {
-        for (let i = 0; i < attractions.length; i++) {
-          if (
-            attractions[i]["subcategory"] &&
-            attractions[i]["subcategory"][0]["name"] == "Shopping"
-          ) {
-            console.log(
-              attractions[i].name,
-              attractions[i]["subcategory"][0]["name"]
-            );
-            console.log("");
-          }
-        }
-      }
-      if (e.value == "Fun & Games") {
-        for (let i = 0; i < attractions.length; i++) {
-          if (
-            attractions[i]["subcategory"] &&
-            attractions[i]["subcategory"][0]["name"] == "Fun & Games"
-          ) {
-            console.log(
-              attractions[i].name,
-              attractions[i]["subcategory"][0]["name"]
-            );
-            console.log("");
-          }
-        }
-      }
-      if (e.value == "Nightlife") {
-        for (let i = 0; i < attractions.length; i++) {
-          if (
-            attractions[i]["subcategory"] &&
-            attractions[i]["subcategory"][0]["name"] == "Nightlife"
-          ) {
-            console.log(
-              attractions[i].name,
-              attractions[i]["subcategory"][0]["name"]
-            );
-            console.log("");
-          }
-        }
-      }
-      if (e.value == "Outdoor Activities") {
-        for (let i = 0; i < attractions.length; i++) {
-          if (
-            attractions[i]["subcategory"] &&
-            attractions[i]["subcategory"][0]["name"] == "Outdoor Activities"
-          ) {
-            console.log(
-              attractions[i].name,
-              attractions[i]["subcategory"][0]["name"]
-            );
-            console.log("");
-          }
-        }
-      }
-      if (e.value == "Restaurants") {
-        for (let i = 0; i < restaurants.length; i++) {
-          if (restaurants[i].name) {
-            console.log(restaurants[i].name, "Restaurant");
-            console.log("");
-          }
-        }
-      }
-    });
-  }
 
   const [place1, setPlace1] = useState("Loading..");
   const [description1, setDescription1] = useState("Loading..");
@@ -190,36 +122,90 @@ function MapView() {
   const [place3, setPlace3] = useState("Loading..");
   const [description3, setDescription3] = useState("Loading..");
   const [photo3, setPhoto3] = useState("/logo512.png");
-  
+
   const [loadingPlaces, setLoadingPlaces] = useState(true);
   function LoadingBar() {
+    var filteredList = [];
     useEffect(() => {
-      if (attractions.length > 0) {
-        setPlace1(attractions[0].name);
-        setDescription1(attractions[0].ranking);
-        if (attractions[0]["photo"]) {
-          setPhoto1(attractions[0]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
+      selectedPreferences.map((e) => {
+        if (e.value == "Shopping") {
+          for (let i = 0; i < attractions.length; i++) {
+            if (
+              attractions[i]["subcategory"] &&
+              attractions[i]["subcategory"][0]["name"] == "Shopping"
+            ) {
+              filteredList.push(attractions[i]);
+            }
+          }
+        }
+        if (e.value == "Fun & Games") {
+          for (let i = 0; i < attractions.length; i++) {
+            if (
+              attractions[i]["subcategory"] &&
+              attractions[i]["subcategory"][0]["name"] == "Fun & Games"
+            ) {
+              filteredList.push(attractions[i]);
+            }
+          }
+        }
+        if (e.value == "Nightlife") {
+          for (let i = 0; i < attractions.length; i++) {
+            if (
+              attractions[i]["subcategory"] &&
+              attractions[i]["subcategory"][0]["name"] == "Nightlife"
+            ) {
+              filteredList.push(attractions[i]);
+            }
+          }
+        }
+        if (e.value == "Outdoor Activities") {
+          for (let i = 0; i < attractions.length; i++) {
+            if (
+              attractions[i]["subcategory"] &&
+              attractions[i]["subcategory"][0]["name"] == "Outdoor Activities"
+            ) {
+              filteredList.push(attractions[i]);
+            }
+          }
+        }
+        if (e.value == "Restaurants") {
+          for (let i = 0; i < restaurants.length; i++) {
+            if(restaurants[i].name){
+            filteredList.push(restaurants[i]);
+            }
+          }
+        }
+      });
+      if (filteredList.length > 3) {
+        //const test = Array.from({length: 3}, () => Math.floor(Math.random() * filteredList.length));
+
+        setPlace1(filteredList[0].name);
+        setDescription1(filteredList[0].ranking);
+        if (filteredList[0]["photo"]) {
+          setPhoto1(filteredList[0]["photo"]["images"]["small"]["url"]);
         }
 
-        setPlace3(attractions[1].name);
-        setDescription3(attractions[1].ranking);
-        if (attractions[1]["photo"]) {
-          setPhoto3(attractions[1]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
+        setPlace2(filteredList[1].name);
+        setDescription2(filteredList[1].ranking);
+        if (filteredList[1]["photo"]) {
+          setPhoto2(filteredList[1]["photo"]["images"]["small"]["url"]);
+        }
+        setPlace3(filteredList[2].name);
+        setDescription3(filteredList[2].ranking);
+        if (filteredList[2]["photo"]) {
+          setPhoto3(filteredList[2]["photo"]["images"]["small"]["url"]);
         }
       }
-
-      if (restaurants.length > 0) {
-        setPlace2(restaurants[0].name);
-        setDescription2(restaurants[0].ranking);
-        if (restaurants[0]["photo"]) {
-          setPhoto2(restaurants[0]["photo"]["images"]["small"]["url"]);
-          setLoadingPlaces(false);
-        }
+      else {
+        setPlace1('No location matching your search');
+        setDescription1('Please try again');
+        setPlace2('No location matching your search');
+        setDescription2('Please try again');
+        setPlace3('No location matching your search');
+        setDescription3('Please try again');
       }
-    }, [attractions, restaurants]);
-
+    }, [filteredList, selectedPreferences]);
+    setLoadingPlaces(false);
     if (loadingPlaces) {
       return <h1> Matching your preferences..</h1>;
     } else {
@@ -254,16 +240,16 @@ function MapView() {
           <div className="cards__container">
             <div className="cards__wrapper">
               <ul className="cards__items">
-                <button className="remove-style" onClick={testButton}>
-                  <CardItem src={photo1} text={description1} label={place1} />
+                <button className="remove-style">
+                  <CardItem src={photo1} text={place1} label={description1} />
                 </button>
 
                 <button className="remove-style">
-                  <CardItem src={photo2} text={description2} label={place2} />
+                  <CardItem src={photo2} text={place2} label={description2} />
                 </button>
 
                 <button className="remove-style">
-                  <CardItem src={photo3} text={description3} label={place3} />
+                  <CardItem src={photo3} text={place3} label={description3} />
                 </button>
               </ul>
             </div>
