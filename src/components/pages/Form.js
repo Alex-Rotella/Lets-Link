@@ -53,6 +53,12 @@ function Form() {
     var one =  Math.floor(Math.random() * 15);
     var two =  Math.floor(Math.random() * 15);
     var three =  Math.floor(Math.random() * 15);
+    while(two == one) {
+      two = Math.floor(Math.random() * 15)
+    }
+    while(three == two || three == one){
+      three =  Math.floor(Math.random() * 15);
+    }
 
     if (
       selectedPreferences.length > 0 &&
