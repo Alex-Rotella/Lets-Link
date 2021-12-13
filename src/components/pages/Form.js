@@ -139,7 +139,7 @@ function Form() {
               </div>
               <div className="card shadow border-0 mb-4">
                 <div className="card-body p-5">
-                  <h2 className="h4 mb-1">What is you location?</h2>
+                  <h2 className="h4 mb-1">What is your location?</h2>
                   <p className="small text-muted font-italic mb-4">
                     Where do you want us to search?
                   </p>
