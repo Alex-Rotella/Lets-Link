@@ -10,9 +10,9 @@ function Cards() {
         <div className='cards__wrapper'>
         <ul className='cards__items'>
             <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
+              src='images/LetsLink.jpeg'
+              text='LETSLINK was developed to plan your next night out on the town. If you have ever had trouble deciding what to do on your night off with friends
+                     and family, LETSLINK will solve your problem. No more excuses. No more wasting time being indecisive. LETSLINK today! 
                    '
               label='LETSLINK'
             />
@@ -20,42 +20,32 @@ function Cards() {
           </ul>
           <ul className='cards__items'>
             <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
-                   '
-              label='LETSLINK'
+              src='images/userStory1.jpeg'
+              text=' " My friends and I had no idea what to do on a Saturday night, so we decided to try Lets Link. We were not dissapointed, they catered a great night for us. The process was quick and easy, and the random aspect really adds to the excitement! " - Luke
+              '
+              label='User Stories'
             />
               <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
+              src='images/userStory2.jpg'
+              text=' " Lets Link brought me and my friends to a cool farmers market, and there ended up being a beautiful pumpkin patch and corn maze there too! Could not recommend Lets Link enough, you can really turn a day of nothing into a great experience with just a few clicks! " - Andrea
                    '
-              label='LETSLINK'
+              label='User Stories'
             />
           </ul>
           <ul className='cards__items'>
             <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
+              src='images/userStory3.jpeg'
+              text=' " Lets Link gave my sister and I an easy way to entertain our cousins while they were in town. We love Lets Link! "
                    '
-              label='LETSLINK'
+              label='User Stories'
             />
               <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
+              src='images/rowan.png'
+              text='LETSLINK is brought to you by : Batuhuan Kir, Alex Rotella, Brant Capozzoli, Declan Riddell, Matt McConnell, Zach Lolli, Ryan Bothmann, and Alexander Abbott. This application was developed for our Senior Project course.
                    '
-              label='LETSLINK'
+              label='Team'
             />
-                          <CardItem
-              src='images/nightOut.jpeg'
-              text='LETSLINK was developed to plan your next night in town. If you ever had trouble deciding what to do on your night off with friends
-                     and family, LETLINK will solve your problem. No more wasting time with undecisveness, LETSLINK today! 
-                   '
-              label='LETSLINK'
-            />
+                          
                       </ul>
         </div>
       </div>
