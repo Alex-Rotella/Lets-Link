@@ -20,7 +20,7 @@ function MapView() {
 
   const location = useLocation();
   const proxy = "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
-  const { checkboxPreferences, peopleValue, budgetValue, value } =
+  const { checkboxPreferences, peopleValue, budgetValue, value, one, two, three} =
     location.state;
   const selectedPreferences = checkboxPreferences.filter(
     ({ isChecked }) => isChecked
@@ -113,19 +113,20 @@ function MapView() {
 
   const [place1, setPlace1] = useState("Loading..");
   const [description1, setDescription1] = useState("Loading..");
-  const [photo1, setPhoto1] = useState("/logo512.png");
+  const [photo1, setPhoto1] = useState("/images/attraction-icon.png");
 
   const [place2, setPlace2] = useState("Loading..");
   const [description2, setDescription2] = useState("Loading..");
-  const [photo2, setPhoto2] = useState("/logo512.png");
+  const [photo2, setPhoto2] = useState("/images/attraction-icon.png");
 
   const [place3, setPlace3] = useState("Loading..");
   const [description3, setDescription3] = useState("Loading..");
-  const [photo3, setPhoto3] = useState("/logo512.png");
+  const [photo3, setPhoto3] = useState("/images/attraction-icon.png");
 
   const [loadingPlaces, setLoadingPlaces] = useState(true);
+
+  var filteredList = [];
   function LoadingBar() {
-    var filteredList = [];
     useEffect(() => {
       selectedPreferences.map((e) => {
         if (e.value == "Shopping") {
@@ -177,23 +178,38 @@ function MapView() {
         }
       });
       if (filteredList.length > 3) {
-        //const test = Array.from({length: 3}, () => Math.floor(Math.random() * filteredList.length));
-
-        setPlace1(filteredList[0].name);
-        setDescription1(filteredList[0].ranking);
-        if (filteredList[0]["photo"]) {
-          setPhoto1(filteredList[0]["photo"]["images"]["small"]["url"]);
+        
+        setPlace1(filteredList[one].name);
+        if(filteredList[one].ranking){
+          setDescription1(filteredList[one].ranking);
+        }
+        else {
+          setDescription1('No available description');
+        }
+        if (filteredList[one]["photo"]) {
+          setPhoto1(filteredList[one]["photo"]["images"]["small"]["url"]);
+        }
+  
+        setPlace2(filteredList[two].name);
+        if(filteredList[two].ranking){
+          setDescription2(filteredList[1].ranking);
+        }
+        else {
+          setDescription2('No available description');
+        }
+        if (filteredList[two]["photo"]) {
+          setPhoto2(filteredList[two]["photo"]["images"]["small"]["url"]);
         }
 
-        setPlace2(filteredList[1].name);
-        setDescription2(filteredList[1].ranking);
-        if (filteredList[1]["photo"]) {
-          setPhoto2(filteredList[1]["photo"]["images"]["small"]["url"]);
+        setPlace3(filteredList[three].name);
+        if(filteredList[three].ranking){
+        setDescription3(filteredList[three].ranking);
         }
-        setPlace3(filteredList[2].name);
-        setDescription3(filteredList[2].ranking);
-        if (filteredList[2]["photo"]) {
-          setPhoto3(filteredList[2]["photo"]["images"]["small"]["url"]);
+        else {
+          setDescription3('No available description');
+        }
+        if (filteredList[three]["photo"]) {
+          setPhoto3(filteredList[three]["photo"]["images"]["small"]["url"]);
         }
       }
       else {
@@ -204,11 +220,13 @@ function MapView() {
         setPlace3('No location matching your search');
         setDescription3('Please try again');
       }
-    }, [filteredList, selectedPreferences]);
+    }, [filteredList]);
+
     setLoadingPlaces(false);
     if (loadingPlaces) {
       return <h1> Matching your preferences..</h1>;
     } else {
+
       return (
         <h1>
           Here are the top 3 places we found in {value.value.description} that
