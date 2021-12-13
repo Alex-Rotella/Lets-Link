@@ -50,6 +50,10 @@ function Form() {
   const [submitted, setSubmitted] = useState(false);
   function onTestClick(e) {
 
+    var one =  Math.floor(Math.random() * 15);
+    var two =  Math.floor(Math.random() * 15);
+    var three =  Math.floor(Math.random() * 15);
+
     if (
       selectedPreferences.length > 0 &&
       peopleValue.value !== "" &&
@@ -63,6 +67,7 @@ function Form() {
           peopleValue,
           budgetValue,
           value,
+          one, two, three
         },
       });
     } else {
