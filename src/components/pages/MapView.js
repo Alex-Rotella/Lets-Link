@@ -20,8 +20,15 @@ function MapView() {
 
   const location = useLocation();
   const proxy = "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
-  const { checkboxPreferences, peopleValue, budgetValue, value, one, two, three} =
-    location.state;
+  const {
+    checkboxPreferences,
+    peopleValue,
+    budgetValue,
+    value,
+    one,
+    two,
+    three,
+  } = location.state;
   const selectedPreferences = checkboxPreferences.filter(
     ({ isChecked }) => isChecked
   );
@@ -171,54 +178,49 @@ function MapView() {
         }
         if (e.value == "Restaurants") {
           for (let i = 0; i < restaurants.length; i++) {
-            if(restaurants[i].name){
-            filteredList.push(restaurants[i]);
+            if (restaurants[i].name) {
+              filteredList.push(restaurants[i]);
             }
           }
         }
       });
       if (filteredList.length > 3) {
-        
         setPlace1(filteredList[one].name);
-        if(filteredList[one].ranking){
+        if (filteredList[one].ranking) {
           setDescription1(filteredList[one].ranking);
-        }
-        else {
-          setDescription1('No available description');
+        } else {
+          setDescription1("No available description");
         }
         if (filteredList[one]["photo"]) {
           setPhoto1(filteredList[one]["photo"]["images"]["small"]["url"]);
         }
-  
+
         setPlace2(filteredList[two].name);
-        if(filteredList[two].ranking){
+        if (filteredList[two].ranking) {
           setDescription2(filteredList[1].ranking);
-        }
-        else {
-          setDescription2('No available description');
+        } else {
+          setDescription2("No available description");
         }
         if (filteredList[two]["photo"]) {
           setPhoto2(filteredList[two]["photo"]["images"]["small"]["url"]);
         }
 
         setPlace3(filteredList[three].name);
-        if(filteredList[three].ranking){
-        setDescription3(filteredList[three].ranking);
-        }
-        else {
-          setDescription3('No available description');
+        if (filteredList[three].ranking) {
+          setDescription3(filteredList[three].ranking);
+        } else {
+          setDescription3("No available description");
         }
         if (filteredList[three]["photo"]) {
           setPhoto3(filteredList[three]["photo"]["images"]["small"]["url"]);
         }
-      }
-      else {
-        setPlace1('No location matching your search');
-        setDescription1('Please try again');
-        setPlace2('No location matching your search');
-        setDescription2('Please try again');
-        setPlace3('No location matching your search');
-        setDescription3('Please try again');
+      } else {
+        setPlace1("No location matching your search");
+        setDescription1("Please try again");
+        setPlace2("No location matching your search");
+        setDescription2("Please try again");
+        setPlace3("No location matching your search");
+        setDescription3("Please try again");
       }
     }, [filteredList]);
 
@@ -226,7 +228,6 @@ function MapView() {
     if (loadingPlaces) {
       return <h1> Matching your preferences..</h1>;
     } else {
-
       return (
         <h1>
           Here are the top 3 places we found in {value.value.description} that
