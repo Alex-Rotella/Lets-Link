@@ -50,6 +50,16 @@ function Form() {
   const [submitted, setSubmitted] = useState(false);
   function onTestClick(e) {
 
+    var one =  Math.floor(Math.random() * 15);
+    var two =  Math.floor(Math.random() * 15);
+    var three =  Math.floor(Math.random() * 15);
+    while(two == one) {
+      two = Math.floor(Math.random() * 15)
+    }
+    while(three == two || three == one){
+      three =  Math.floor(Math.random() * 15);
+    }
+
     if (
       selectedPreferences.length > 0 &&
       peopleValue.value !== "" &&
@@ -63,6 +73,7 @@ function Form() {
           peopleValue,
           budgetValue,
           value,
+          one, two, three
         },
       });
     } else {
@@ -134,7 +145,7 @@ function Form() {
               </div>
               <div className="card shadow border-0 mb-4">
                 <div className="card-body p-5">
-                  <h2 className="h4 mb-1">What is you location?</h2>
+                  <h2 className="h4 mb-1">What is your location?</h2>
                   <p className="small text-muted font-italic mb-4">
                     Where do you want us to search?
                   </p>
