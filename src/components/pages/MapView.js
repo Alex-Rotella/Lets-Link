@@ -197,7 +197,7 @@ function MapView() {
 
         setPlace2(filteredList[two].name);
         if (filteredList[two].ranking) {
-          setDescription2(filteredList[1].ranking);
+          setDescription2(filteredList[two].ranking);
         } else {
           setDescription2("No available description");
         }
